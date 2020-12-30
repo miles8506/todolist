@@ -1,32 +1,44 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>ToDoList—代辦事項列表</title>
-    <link rel="stylesheet" href="css/index.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/index.css">
     <script src="./js/jquery.min.js"></script>
     <script src="./js/index.js"></script>
 </head>
 
 <body>
-    <header>
+    <!-- header -->
+    <header class="header">
         <section>
-            <label for="title">ToDoList</label>
-            <input type="text" id="title" name="title" placeholder="添加ToDo" required="required" autocomplete="off" />
+            <div class="wrap">
+                <div class="logo">ToDoList</div>
+                <input type="text" placeholder="添加ToDo" id="search">
+            </div>
         </section>
     </header>
-    <section>
-        <h2>正在進行 <span id="todocount">0</span></h2>
-        <ol id="todolist" class="demo-box">
-        </ol>
-        <h2>已經完成 <span id="donecount">0</span></h2>
-        <ul id="donelist">
-        </ul>
+    <!-- 內容 -->
+    <section class="content">
+        <!-- 正在進行 -->
+        <div class="todolist">
+            <div class="todo_hd">正在進行<span class="todotol">0</span></div>
+            <ul class="todo_bd">
+            </ul>
+        </div>
+        <!-- 已完成 -->
+        <div class="donelist">
+            <div class="done_hd">已經完成<span class="donetol">0</span></div>
+            <ul class="done_bd">
+            </ul>
+        </div>
     </section>
-    <footer>
-        Copyright &copy; 2021 todolist.cn
+    <!-- footer -->
+    <footer class="footer">
+        Copyright © 2021 todolist.cn
     </footer>
 </body>
 

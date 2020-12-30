@@ -1,68 +1,69 @@
 $(function () {
+    // 輸入
     load();
-    $("#title").on("keydown", function (e) {
+    $("#search").on("keydown", function (e) {
         if (e.keyCode === 13) {
-            if ($(this).val() !== '') {
-                var data = dataGet();
-                data.push({ title: $(this).val(), done: false });
-                dataSave(data);
-                $(this).val('')
-                load();
+            if ($(this).val() == '') {
+                alert('請輸入ToDolist項目');
             } else {
-                alert('請輸入ToDo項目');
+                var data = dataGet();
+                data.push({ todo: $(this).val(), done: false });
+                dataSet(data);
+                $(this).val('');
                 load();
             }
         };
     });
-    // 刪除數據
-    $("ol , ul").on("click", "a", function () {
+    // 點擊close
+    $(".todo_bd , .done_bd").on("click", ".close", function () {
         var data = dataGet();
         var idGet = $(this).attr("id");
         data.splice(idGet, 1);
-        dataSave(data);
+        dataSet(data);
         load();
-    });
-    // 判斷已完成或未完成
-    $("ol , ul").on("click", "input", function () {
+    })
+    // 點擊checkbox
+    $(".todo_bd , .done_bd").on("click", ".chose", function () {
         var data = dataGet();
-        data[$(this).siblings("a").attr("id")].done = $(this).prop("checked");
-        dataSave(data);
-        load();
-    });
-
-    // 提取數據
+        var idGet = $(this).siblings(".close").attr("id");
+        data[idGet].done = $(this).prop("checked");
+        dataSet(data);
+    })
+    // 獲取
     function dataGet() {
-        var data = localStorage.getItem("todo");
+        var data = localStorage.getItem("todolist")
         if (data !== null) {
             return JSON.parse(data);
         } else {
             return [];
         };
     };
-    // 存取數據
-    function dataSave(resource) {
-        localStorage.setItem("todo", JSON.stringify(resource));
+    // 儲存
+    function dataSet(resource) {
+        localStorage.setItem("todolist", JSON.stringify(resource));
+        load();
     };
-    // 渲染頁面
     function load() {
-        var todolist = dataGet();
+        var data = dataGet();
         var num = 0;
-        $("ol, ul").children().remove();
-        $.each(todolist, function (i, element) {
-            if (element.done) {
-                var li = $("<li><input type='checkbox' checked='checked'><p>" + element.title + "</p><a href='javascript:;' id='" + num + "'></a></li>");
-                $("#donelist").prepend(li);
+        $(".todo_bd").children().remove();
+        $(".done_bd").children().remove();
+        $.each(data, function (i, element) {
+            if (element.done !== true) {
+                var li = $("<li><input type='checkbox' class='chose'><p>" + element.todo + "</p><a href='javascript:;' class = 'close' id='" + num + "'></a></li>");
+                $(".todo_bd").prepend(li);
             } else {
-                var li = $("<li><input type='checkbox'><p>" + element.title + "</p><a href='javascript:;' id='" + num + "'></a></li>");
-                $("#todolist").prepend(li);
+                var li = $("<li><input type='checkbox' class='chose' checked='checked'><p>" + element.todo + "</p><a href='javascript:;' class = 'close' id='" + num + "'></a></li>");
+                $(".done_bd").prepend(li);
             }
-            // 計算當前已完成數量
-            var donelist = $("#donelist").children().length;
-            $("#donecount").html(donelist);
-            // 計算當尚未完成數量
-            var todo = $("#todolist").children().length;
-            $("#todocount").html(todo);
             num++;
-        })
+        });
+        // todo計算小框
+        var todoTol = $(".todo_bd").children().length;
+        $(".todotol").html(todoTol);
+        // done計算小框
+        var doneTol = $(".done_bd").children().length;
+        $(".donetol").html(doneTol);
+
     };
 });
