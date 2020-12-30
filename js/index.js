@@ -31,7 +31,7 @@ $(function () {
     })
     // 獲取
     function dataGet() {
-        var data = localStorage.getItem("todolist")
+        var data = localStorage.getItem("todolist");
         if (data !== null) {
             return JSON.parse(data);
         } else {
@@ -64,6 +64,5 @@ $(function () {
         // done計算小框
         var doneTol = $(".done_bd").children().length;
         $(".donetol").html(doneTol);
-
     };
 });
